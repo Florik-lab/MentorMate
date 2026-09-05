@@ -4,10 +4,77 @@ const SAMPLE_DATA = {
         id: 'user_florik',
         username: 'Florik',
         email: 'florik@mentormate.local',
-        role: 'master', // Master role can manage mentors
+        role: 'master',
         avatar: '👤',
-        joinedDate: '2024-01-15'
+        joinedDate: '2024-01-15',
+        password: '12345678' // Master password
     },
+
+    users: [
+        {
+            id: 'user_florik',
+            username: 'Florik',
+            email: 'florik@mentormate.local',
+            role: 'master',
+            status: 'active',
+            joinedDate: '2024-01-15',
+            avatar: '👤'
+        },
+        {
+            id: 'user_student1',
+            username: 'Alex',
+            email: 'alex@student.local',
+            role: 'student',
+            status: 'active',
+            joinedDate: '2024-06-10',
+            avatar: '👨‍🎓'
+        },
+        {
+            id: 'user_student2',
+            username: 'Jordan',
+            email: 'jordan@student.local',
+            role: 'student',
+            status: 'active',
+            joinedDate: '2024-07-05',
+            avatar: '👩‍🎓'
+        },
+        {
+            id: 'user_mentor1',
+            username: 'Sarah',
+            email: 'sarah@mentor.local',
+            role: 'mentor',
+            status: 'active',
+            joinedDate: '2024-03-20',
+            avatar: '👩‍🏫'
+        }
+    ],
+
+    roles: [
+        {
+            id: 'role_master',
+            name: 'Master',
+            description: 'Full admin access, manage all users and content',
+            permissions: ['manage_users', 'ban_users', 'manage_roles', 'manage_professionals', 'view_all']
+        },
+        {
+            id: 'role_mentor',
+            name: 'Mentor',
+            description: 'Can answer questions and help students',
+            permissions: ['answer_questions', 'view_profile', 'edit_profile']
+        },
+        {
+            id: 'role_student',
+            name: 'Student',
+            description: 'Can ask questions and use community',
+            permissions: ['ask_questions', 'view_profile', 'edit_profile', 'post_forum']
+        },
+        {
+            id: 'role_moderator',
+            name: 'Moderator',
+            description: 'Can moderate forum and help manage community',
+            permissions: ['moderate_forum', 'view_forum_ids', 'manage_users', 'view_all']
+        }
+    ],
 
     professionals: [
         {
@@ -229,6 +296,70 @@ class StorageManager {
 
     getCurrentUser() {
         return this.data.currentUser;
+    }
+
+    setCurrentUser(user) {
+        this.data.currentUser = user;
+        this.saveData();
+    }
+
+    // User Management
+    getAllUsers() {
+        return this.data.users;
+    }
+
+    getUserById(id) {
+        return this.data.users.find(u => u.id === id);
+    }
+
+    updateUserRole(userId, newRole) {
+        const user = this.data.users.find(u => u.id === userId);
+        if (user) {
+            user.role = newRole;
+            this.saveData();
+            return true;
+        }
+        return false;
+    }
+
+    banUser(userId) {
+        const user = this.data.users.find(u => u.id === userId);
+        if (user) {
+            user.status = 'banned';
+            this.saveData();
+            return true;
+        }
+        return false;
+    }
+
+    unbanUser(userId) {
+        const user = this.data.users.find(u => u.id === userId);
+        if (user) {
+            user.status = 'active';
+            this.saveData();
+            return true;
+        }
+        return false;
+    }
+
+    resetUserAccount(userId) {
+        const user = this.data.users.find(u => u.id === userId);
+        if (user) {
+            user.status = 'active';
+            // Reset user data but keep basic info
+            this.saveData();
+            return true;
+        }
+        return false;
+    }
+
+    // Roles
+    getAllRoles() {
+        return this.data.roles;
+    }
+
+    getRoleById(roleId) {
+        return this.data.roles.find(r => r.id === roleId);
     }
 
     getAllProfessionals() {
