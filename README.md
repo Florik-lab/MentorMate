@@ -1,196 +1,175 @@
-# AnonyQ - Anonymous Questions to Professionals
+# MentorMate - Connect with Mentors & Peers
 
-A cozy web application where users can ask anonymous questions to professionals or post them on a community forum. Built with HTML, CSS, and JavaScript.
+A cozy web application for vocational school students to ask questions anonymously, connect with mentors, and find support from a caring community. Built with HTML, CSS, and JavaScript.
+
+## What is MentorMate?
+
+MentorMate is designed for vocational school students and people who need support. Whether you're looking for career guidance, technical skills help, personal growth advice, or just someone to talk to — MentorMate connects you with experienced mentors and a supportive community.
 
 ## Features
 
 ### 🎯 Dashboard
 - View all your questions at a glance
 - Track question status (pending, answered)
-- See statistics including total questions, answered questions, and pending questions
-- View recent answers from professionals
-- Monitor new notifications
+- See statistics including total questions asked, answered, and waiting
+- View answers from mentors
+- Monitor new messages and support
 
-### ❓ Ask a Question
-- Submit anonymous questions to professionals
-- Choose a category for your question
-- Option to send directly to a specific professional
-- Option to post on the community forum for crowd-sourced answers
-- Questions can be anonymous or identified based on your settings
+### ❓ Ask for Help
+- Submit anonymous questions to mentors
+- Choose a topic for your question (Career, Skills, Personal Growth, etc.)
+- Option to ask a specific mentor privately
+- Option to post in community for crowd-sourced support
+- Complete anonymity when asking mentors one-on-one
 
-### 👨‍💼 Find Professionals
-- Search for professionals by name, expertise, or specialty
-- Filter professionals by category (Technology, Business, Career, Health, Education, Finance, Legal)
-- View professional profiles with detailed information
-- See professional ratings, answer counts, and response times
-- Send questions directly to professionals you trust
+### 👨‍💼 Find Mentors
+- Search for mentors by name, expertise, or specialty
+- Filter mentors by topic (Career, Technical Skills, Business, Health, etc.)
+- View detailed mentor profiles with experience and ratings
+- See response times and satisfaction ratings
+- Send questions directly to mentors you trust
 
 ### 💬 Community Forum
-- Browse community questions posted by users
-- Search forum posts by keywords
+- Browse questions from other students
+- Search for topics relevant to you
 - Filter by category
-- See reply counts and view statistics
-- Participate in crowd-sourced question answering
-- All forum questions have moderator-only ID codes for tracking
+- See how many people have replied
+- Find support from peers who understand
+- All community posts have private ID codes (moderators only)
 
-### 🔔 Notifications
-- Receive notifications when professionals answer your questions
-- Get notified of replies to forum posts
-- Mark notifications as read
-- Stay updated on all interactions
+### 🔔 Messages
+- Receive messages when mentors answer your questions
+- Get notified of replies in the community
+- Mark messages as read
+- Stay connected with your supporters
 
-### 🏷️ Professional Tags & Expertise
-- Professionals are tagged with their areas of expertise
-- Tags include: Allgemeinwissen, Q&A Expert, Technology, Business, Healthcare, Finance, and more
-- Filter professionals by tags to find specialists
-- View professional specialties and expertise areas
+### 🏷️ Mentor Tags & Specialties
+- Mentors are tagged with their expertise areas
+- Tags include: Allgemeinwissen, Q&A Expert, Technical Skills, and more
+- Filter mentors by their specialties
+- Find the right person for your needs
 
 ## Color Scheme
 
-The application features a cozy atmosphere with:
-- **Primary Purple**: #7c3aed (main brand color)
-- **Accent Orange**: #f97316 (highlights and CTAs)
-- **Light backgrounds** with purple and orange accents
-- **Smooth gradients** for modern look
+MentorMate features a warm, cozy atmosphere with:
+- **Primary Purple**: #7c3aed (welcoming, trustworthy)
+- **Accent Orange**: #f97316 (warm, supportive)
+- **Light backgrounds** with smooth gradients
+- **Friendly, approachable design**
 
 ## How to Use
 
-### For Regular Users
+### For Students
 
-1. **Asking a Question:**
-   - Navigate to "Ask Question"
-   - Enter your question title, select a category, and provide details
-   - Choose whether to send to a specific professional or post on the forum
-   - Submit your question anonymously
+1. **Getting Help:**
+   - Navigate to "Ask for Help"
+   - Write your question clearly
+   - Choose your topic
+   - Select a mentor or post in the community
+   - Your identity remains private
 
-2. **Finding Professionals:**
-   - Go to "Find Professionals"
-   - Search by name, expertise, or specialty
-   - Filter by category
-   - Click on a professional to view their full profile
+2. **Finding Mentors:**
+   - Go to "Find Mentors"
+   - Browse experienced mentors
+   - Read their profiles and specialties
    - Send them a question directly
 
-3. **Using the Forum:**
-   - Navigate to "Community Forum"
-   - Browse questions posted by other users
-   - Search for specific topics
-   - Reply to forum posts
+3. **Community Support:**
+   - Visit "Community Forum"
+   - Read questions from other students
+   - Share your experiences
+   - Help others (and get helped)
 
-4. **Managing Notifications:**
-   - Click the bell icon or go to "Notifications"
-   - View all notifications about answers and replies
-   - Mark notifications as read
+4. **Staying Connected:**
+   - Check your "Messages" for responses
+   - Get notifications when someone helps you
+   - Reply to mentors and community members
 
-### For Professionals
+### For Mentors
 
-- Receive questions from anonymous users
-- Provide detailed answers
-- Build your profile and ratings
-- Help the community through forum participation
+- Help students reach their potential
+- Build your profile and reputation
+- Specialize in topics you're passionate about
+- Be part of a supportive community
 
 ## File Structure
 
 ```
-anonymous-questions-website/
+mentormate/
 │
-├── index.html          # Main HTML structure with all pages and components
-├── styles.css          # Complete styling with purple and orange theme
-├── data.js             # Sample data, professionals, and storage management
-├── script.js           # Main application logic and interactivity
+├── index.html          # Main application structure
+├── styles.css          # Beautiful purple & orange styling
+├── data.js             # Sample mentors and storage
+├── script.js           # Interactive features
 └── README.md           # This file
 ```
 
 ## Technical Details
 
 ### Data Storage
-- Data is stored in browser's localStorage
-- All information persists between sessions
-- Sample data is pre-loaded on first visit
+- Data saved in browser's localStorage
+- Information persists between sessions
+- Sample data pre-loaded on first visit
 
-### Anonymous Questions
-- Questions sent to professionals are saved **without** a user ID
-- Questions posted on forum include a **moderator ID code** (visible only to moderators)
-- This ensures anonymity for direct professional inquiries
+### Question Anonymity
+- **Private to Mentor**: Saved without your ID - maximum privacy
+- **Community Post**: Has moderator-only tracking code
+- Your choice - ask privately or ask the community
 
-### Question Submission Process
-1. **Anonymous to Professional Only**: No ID saved, maximum anonymity
-2. **Forum Only**: Moderator ID generated for tracking purposes
-3. **Both**: Posted on forum with moderator ID
+### Question Types
+1. **Private**: Only the mentor you select will see it
+2. **Community**: Everyone can answer and learn
+3. **Both**: Get help from both mentor and community
 
-## Browser Compatibility
+## Browser Support
 
-- Chrome/Edge: ✅ Full support
-- Firefox: ✅ Full support
-- Safari: ✅ Full support
-- Mobile browsers: ✅ Responsive design
+✅ Chrome/Edge  
+✅ Firefox  
+✅ Safari  
+✅ Mobile browsers (responsive design)
 
-## Key Professionals in Demo
+## Key Mentors in the System
 
 ### Dieter
-- **Title**: Knowledge Expert
-- **Tags**: Allgemeinwissen
-- **Specialty**: General Knowledge, Learning Support, Topic Research
+- **Title**: General Knowledge Expert
+- **Expertise**: Allgemeinwissen
 - **Rating**: 4.8/5
+- **Specialties**: General Knowledge, Study Support, Personal Development
 
 ### German
-- **Title**: Q&A Specialist
-- **Tags**: Q&A Expert
-- **Specialty**: Complex Questions, Problem Solving, Expert Advice
+- **Title**: Career Mentor & Problem Solver
+- **Expertise**: Q&A Expert
 - **Rating**: 4.9/5
+- **Specialties**: Career Advice, Problem Solving, Job Search
 
 ## Getting Started
 
-1. Clone or download the repository
-2. Open `index.html` in your web browser
-3. Start exploring and asking questions!
+1. Download or clone this repository
+2. Open `index.html` in your browser
+3. Start asking questions and connecting with mentors!
 
-## Features Overview
+## Features Status
 
 | Feature | Status |
 |---------|--------|
-| Dashboard | ✅ Implemented |
-| Ask Questions | ✅ Implemented |
-| Professional Search | ✅ Implemented |
-| Professional Filtering | ✅ Implemented |
-| Community Forum | ✅ Implemented |
-| Notifications | ✅ Implemented |
-| Professional Tags | ✅ Implemented |
-| Anonymous Questions | ✅ Implemented |
-| Moderator ID Codes | ✅ Implemented |
-| Responsive Design | ✅ Implemented |
+| Dashboard | ✅ Complete |
+| Ask for Help | ✅ Complete |
+| Find Mentors | ✅ Complete |
+| Community Forum | ✅ Complete |
+| Messages | ✅ Complete |
+| Mentor Profiles | ✅ Complete |
+| Search & Filter | ✅ Complete |
+| Anonymous Questions | ✅ Complete |
+| Responsive Design | ✅ Complete |
 
-## Notifications System
+## About MentorMate
 
-The notification system includes:
-- Answer notifications when professionals respond
-- Forum reply notifications
-- Professional profile updates
-- Unread notification counter
-- Mark as read functionality
-
-## Search Functionality
-
-- **Global Search**: Search across all questions and professionals
-- **Professional Search**: Find professionals by name, expertise, or tags
-- **Forum Search**: Search forum posts by title or content
-- **Filtering**: Filter by category across all search types
-
-## Responsive Design
-
-The application is fully responsive and works great on:
-- Desktop computers
-- Tablets
-- Mobile phones
-
-All features are accessible on all device sizes.
-
-## Tips for Best Experience
-
-1. **For Professionals**: Keep your profile complete with accurate expertise tags
-2. **For Users**: Be specific in your questions for better answers
-3. **For Community**: Engage in forum discussions to help others
-4. **Search Smart**: Use specific keywords to find relevant professionals
+MentorMate is built for:
+- 🎓 **Vocational School Students** - Get support for your training
+- 😔 **People Who Need to Talk** - Find someone who understands
+- 🤝 **Career Explorers** - Get mentorship from experienced professionals
+- 📚 **Lifelong Learners** - Connect with experts in your field
 
 ---
 
-**AnonyQ** - Ask Anonymously, Get Expert Answers! 🚀
+**MentorMate** — Find Support, Grow Together 💜🧡
