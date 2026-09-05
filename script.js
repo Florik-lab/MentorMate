@@ -3,6 +3,7 @@ class AnonyQApp {
     constructor() {
         this.currentPage = 'dashboard';
         this.selectedProfessional = null;
+        this.loginPending = null;
         this.init();
     }
 
@@ -10,6 +11,15 @@ class AnonyQApp {
         this.setupEventListeners();
         this.loadPage('dashboard');
         this.updateStats();
+        this.checkMasterAccount();
+    }
+
+    checkMasterAccount() {
+        const isMaster = storage.isMasterAccount();
+        const adminLink = document.getElementById('admin-nav-link');
+        if (isMaster) {
+            adminLink.style.display = 'block';
+        }
     }
 
     setupEventListeners() {
@@ -59,7 +69,10 @@ class AnonyQApp {
         // Close dropdowns when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.professional-search')) {
-                document.getElementById('professional-dropdown').style.display = 'none';
+                const dropdown = document.getElementById('professional-dropdown');
+                if (dropdown) {
+                    dropdown.style.display = 'none';
+                }
             }
         });
 
@@ -109,6 +122,7 @@ class AnonyQApp {
         // Logout button
         document.querySelector('.logout-btn').addEventListener('click', () => {
             alert('Logged out! (This is a demo)');
+            location.reload();
         });
     }
 
@@ -139,9 +153,10 @@ class AnonyQApp {
                 'ask-question': 'Ask a Question',
                 'professionals': 'Find Professionals',
                 'forum': 'Community Forum',
-                'notifications': 'Notifications'
+                'notifications': 'Notifications',
+                'admin': 'Admin Panel'
             };
-            document.getElementById('page-title').textContent = titles[pageName] || 'AnonyQ';
+            document.getElementById('page-title').textContent = titles[pageName] || 'MentorMate';
 
             // Load page content
             switch (pageName) {
@@ -156,6 +171,9 @@ class AnonyQApp {
                     break;
                 case 'notifications':
                     this.loadNotifications();
+                    break;
+                case 'admin':
+                    this.loadAdminPanel();
                     break;
             }
         }
@@ -216,8 +234,6 @@ class AnonyQApp {
 
     renderProfessionalsGrid(professionals) {
         const grid = document.getElementById('professionals-grid');
-        const currentUser = storage.getCurrentUser();
-        const isMaster = currentUser.role === 'master';
 
         grid.innerHTML = professionals.map(prof => `
             <div class="professional-card" onclick="app.viewProfessionalProfile('${prof.id}')">
@@ -247,7 +263,6 @@ class AnonyQApp {
                     </div>
                     <div class="professional-actions">
                         <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); app.askProfessional('${prof.id}')">Ask Question</button>
-                        ${isMaster ? `<button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); app.manageProfessionalTags('${prof.id}')">Manage Tags</button>` : ''}
                     </div>
                 </div>
             </div>
@@ -264,9 +279,6 @@ class AnonyQApp {
     viewProfessionalProfile(profId) {
         const prof = storage.getProfessionalById(profId);
         if (!prof) return;
-
-        const currentUser = storage.getCurrentUser();
-        const isMaster = currentUser.role === 'master';
 
         const modal = document.getElementById('professional-modal');
         const body = document.getElementById('professional-modal-body');
@@ -290,7 +302,6 @@ class AnonyQApp {
                 <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
                     ${tagsHtml || '<p class="empty-state">No tags yet.</p>'}
                 </div>
-                ${isMaster ? `<button class="btn btn-secondary btn-sm" onclick="app.manageProfessionalTags('${prof.id}')">Manage Tags</button>` : ''}
             </div>
 
             <div style="margin-bottom: 20px;">
@@ -315,57 +326,10 @@ class AnonyQApp {
                 </div>
             </div>
 
-            <button class="btn btn-primary" style="width: 100%;" onclick="app.askProfessional('${prof.id}'); app.closeAllModals();">Ask This Professional</button>
+            <button class="btn btn-primary" style="width: 100%;" onclick="app.askProfessional('${prof.id}'); app.closeAllModals();">Ask This Mentor</button>
         `;
 
         modal.style.display = 'block';
-    }
-
-    manageProfessionalTags(profId) {
-        const prof = storage.getProfessionalById(profId);
-        if (!prof) return;
-
-        const currentUser = storage.getCurrentUser();
-        if (currentUser.role !== 'master') {
-            alert('Only master account can manage tags!');
-            return;
-        }
-
-        const modal = document.getElementById('professional-modal');
-        const body = document.getElementById('professional-modal-body');
-
-        const availableTags = ['Allgemeinwissen', 'Q&A Expert', 'Technology', 'Business', 'Healthcare', 'Finance'];
-        const currentTags = prof.tags;
-
-        let tagsHtml = availableTags.map(tag => `
-            <label class="checkbox-label" style="display: flex; align-items: center; gap: 10px; margin: 10px 0; cursor: pointer;">
-                <input type="checkbox" value="${tag}" ${currentTags.includes(tag) ? 'checked' : ''} onchange="app.toggleTag('${prof.id}', '${tag}', this.checked)">
-                <span>${tag}</span>
-            </label>
-        `).join('');
-
-        body.innerHTML = `
-            <h2>Manage Tags for ${prof.name}</h2>
-            <p style="color: var(--text-light); margin-bottom: 20px;">Select tags to assign to this professional:</p>
-            <div style="display: flex; flex-direction: column;">
-                ${tagsHtml}
-            </div>
-            <div style="margin-top: 20px; display: flex; gap: 10px;">
-                <button class="btn btn-secondary" onclick="app.viewProfessionalProfile('${prof.id}')">Back</button>
-            </div>
-        `;
-
-        modal.style.display = 'block';
-    }
-
-    toggleTag(profId, tag, checked) {
-        if (checked) {
-            storage.addTagToProfessional(profId, tag);
-        } else {
-            storage.removeTagFromProfessional(profId, tag);
-        }
-        // Refresh the view
-        this.manageProfessionalTags(profId);
     }
 
     toggleProfessionalSection(checked) {
@@ -384,7 +348,7 @@ class AnonyQApp {
         const dropdown = document.getElementById('professional-list');
         
         if (results.length === 0) {
-            dropdown.innerHTML = '<p style="padding: 10px; color: var(--text-light);">No professionals found</p>';
+            dropdown.innerHTML = '<p style="padding: 10px; color: var(--text-light);">No mentors found</p>';
             return;
         }
 
@@ -432,7 +396,7 @@ class AnonyQApp {
         }
 
         if (askProfessional && !this.selectedProfessional) {
-            alert('Please select a professional');
+            alert('Please select a mentor');
             return;
         }
 
@@ -450,10 +414,9 @@ class AnonyQApp {
             },
             postOnForum: postOnForum,
             status: 'pending',
-            // If posting on forum, generate moderator ID code. If anonymous to professional, no ID
             forumId: postOnForum ? this.generateModeratorId() : null,
-            userId: postOnForum ? storage.getCurrentUser().id : null, // Only save ID if posted on forum
-            isAnonymous: !postOnForum || askProfessional // Anonymous unless only posted on forum
+            userId: postOnForum ? storage.getCurrentUser().id : null,
+            isAnonymous: !postOnForum || askProfessional
         };
 
         // Save question
@@ -480,7 +443,6 @@ class AnonyQApp {
     }
 
     generateModeratorId() {
-        // Generate a moderator ID code for forum posts
         const currentUser = storage.getCurrentUser();
         const userNumber = currentUser.id.charCodeAt(currentUser.id.length - 1) % 1000;
         const timestamp = Date.now() % 1000;
@@ -594,7 +556,7 @@ class AnonyQApp {
             const prof = storage.getProfessionalById(question.sendToProf.professionalId);
             contentHtml += `
                 <div style="background: var(--light-purple); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--primary-purple);">
-                    <p><strong>Sent to Professional:</strong> ${prof?.name || 'Unknown'}</p>
+                    <p><strong>Sent to Mentor:</strong> ${prof?.name || 'Unknown'}</p>
                 </div>
             `;
         }
@@ -631,6 +593,204 @@ class AnonyQApp {
         this.selectProfessional(profId, storage.getProfessionalById(profId).name);
     }
 
+    // Admin Panel Functions
+    loadAdminPanel() {
+        this.loadUsersList();
+    }
+
+    loadUsersList() {
+        const users = storage.getAllUsers();
+        const usersList = document.getElementById('users-list');
+
+        usersList.innerHTML = users.map(user => `
+            <div class="user-card" style="background: var(--light-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h4>${user.avatar} ${user.username}</h4>
+                    <p style="color: var(--text-light); font-size: 12px;">Email: ${user.email}</p>
+                    <p style="color: var(--text-light); font-size: 12px;">Role: <strong>${user.role}</strong></p>
+                    <p style="color: var(--text-light); font-size: 12px;">Status: <span style="color: ${user.status === 'active' ? 'var(--success)' : 'var(--accent-orange)'}">${user.status.toUpperCase()}</span></p>
+                </div>
+                <div style="display: flex; gap: 10px; flex-direction: column;">
+                    <button class="btn btn-primary btn-sm" onclick="app.openRoleChangeModal('${user.id}', '${user.username}')">Change Role</button>
+                    ${user.status === 'active' 
+                        ? `<button class="btn btn-secondary btn-sm" style="background: var(--accent-orange);" onclick="app.banUser('${user.id}')">Ban User</button>`
+                        : `<button class="btn btn-secondary btn-sm" style="background: var(--success);" onclick="app.unbanUser('${user.id}')">Unban User</button>`
+                    }
+                    <button class="btn btn-secondary btn-sm" onclick="app.resetUserAccount('${user.id}')">Reset Account</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    openRoleChangeModal(userId, username) {
+        const roles = storage.getAllRoles();
+        const user = storage.getUserById(userId);
+        
+        const modal = document.getElementById('question-modal');
+        const body = document.getElementById('modal-body');
+
+        body.innerHTML = `
+            <h2>Change Role for ${username}</h2>
+            <p style="color: var(--text-light); margin-bottom: 20px;">Current Role: <strong>${user.role}</strong></p>
+            <div style="display: grid; gap: 10px;">
+                ${roles.map(role => `
+                    <div style="background: var(--light-bg); padding: 15px; border-radius: 8px; cursor: pointer; border: 2px solid transparent;" 
+                         onclick="app.changeUserRole('${userId}', '${role.id}'); app.closeAllModals();"
+                         onmouseover="this.style.borderColor='var(--primary-purple)'"
+                         onmouseout="this.style.borderColor='transparent'">
+                        <h4>${role.name}</h4>
+                        <p style="font-size: 12px; color: var(--text-light);">${role.description}</p>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        modal.style.display = 'block';
+    }
+
+    changeUserRole(userId, roleId) {
+        const roles = storage.getAllRoles();
+        const role = roles.find(r => r.id === roleId);
+        
+        if (storage.updateUserRole(userId, role.name.toLowerCase())) {
+            alert(`User role updated to ${role.name}!`);
+            this.loadUsersList();
+        }
+    }
+
+    banUser(userId) {
+        if (confirm('Are you sure you want to ban this user?')) {
+            if (storage.banUser(userId)) {
+                alert('User has been banned!');
+                this.loadUsersList();
+            }
+        }
+    }
+
+    unbanUser(userId) {
+        if (confirm('Are you sure you want to unban this user?')) {
+            if (storage.unbanUser(userId)) {
+                alert('User has been unbanned!');
+                this.loadUsersList();
+            }
+        }
+    }
+
+    resetUserAccount(userId) {
+        if (confirm('Are you sure you want to reset this user\'s account?')) {
+            if (storage.resetUserAccount(userId)) {
+                alert('User account has been reset!');
+                this.loadUsersList();
+            }
+        }
+    }
+
+    switchAdminTab(tabName) {
+        // Hide all tabs
+        document.querySelectorAll('.admin-tab-content').forEach(tab => {
+            tab.style.display = 'none';
+        });
+
+        // Remove active class from buttons
+        document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+
+        // Show selected tab
+        const tabElement = document.getElementById('admin-' + tabName + '-tab');
+        if (tabElement) {
+            tabElement.style.display = 'block';
+        }
+
+        // Add active class to clicked button
+        event.target.classList.add('active');
+
+        // Load content
+        if (tabName === 'users') {
+            this.loadUsersList();
+        } else if (tabName === 'roles') {
+            this.loadRolesList();
+        }
+    }
+
+    loadRolesList() {
+        const roles = storage.getAllRoles();
+        const rolesList = document.getElementById('roles-list');
+
+        rolesList.innerHTML = roles.map(role => `
+            <div class="role-card" style="background: var(--light-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <h4>${role.name}</h4>
+                <p style="color: var(--text-light); margin: 10px 0;">${role.description}</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    ${role.permissions.map(perm => `<span class="expertise-badge">${perm}</span>`).join('')}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Profile Modal
+    openProfileModal() {
+        const currentUser = storage.getCurrentUser();
+        
+        // If user is Florik, require password
+        if (currentUser.id === 'user_florik') {
+            this.loginPending = 'profile';
+            const loginModal = document.getElementById('login-modal');
+            loginModal.style.display = 'block';
+        } else {
+            this.showProfileModal(currentUser);
+        }
+    }
+
+    submitLogin() {
+        const password = document.getElementById('login-password').value;
+        const currentUser = storage.getCurrentUser();
+
+        if (password === currentUser.password) {
+            document.getElementById('login-modal').style.display = 'none';
+            document.getElementById('login-password').value = '';
+            
+            if (this.loginPending === 'profile') {
+                this.showProfileModal(currentUser);
+            }
+            this.loginPending = null;
+        } else {
+            alert('Incorrect password!');
+        }
+    }
+
+    cancelLogin() {
+        document.getElementById('login-modal').style.display = 'none';
+        document.getElementById('login-password').value = '';
+        this.loginPending = null;
+    }
+
+    showProfileModal(user) {
+        const modal = document.getElementById('profile-modal');
+        const body = document.getElementById('profile-modal-body');
+
+        body.innerHTML = `
+            <div style="text-align: center;">
+                <div style="font-size: 80px; margin-bottom: 15px;">${user.avatar}</div>
+                <h2>${user.username}</h2>
+                <p style="color: var(--text-light); margin: 10px 0;">${user.email}</p>
+                <p style="color: var(--primary-purple); font-weight: 600; margin: 10px 0;">Role: ${user.role.toUpperCase()}</p>
+                <p style="color: var(--text-light); font-size: 12px; margin: 20px 0;">Joined: ${user.joinedDate}</p>
+                
+                <div style="background: var(--light-bg); padding: 15px; border-radius: 8px; margin: 20px 0; text-align: left;">
+                    <h3>Profile Information</h3>
+                    <p><strong>Username:</strong> ${user.username}</p>
+                    <p><strong>Email:</strong> ${user.email}</p>
+                    <p><strong>User ID:</strong> ${user.id}</p>
+                    <p><strong>Role:</strong> ${user.role}</p>
+                    <p><strong>Status:</strong> <span style="color: var(--success);">Active</span></p>
+                </div>
+            </div>
+        `;
+
+        modal.style.display = 'block';
+    }
+
     globalSearch(query) {
         if (!query) {
             this.loadPage(this.currentPage);
@@ -642,7 +802,7 @@ class AnonyQApp {
         const forumResults = storage.searchForumPosts(query);
 
         console.log('Global Search Results:', { professionals: profResults, forum: forumResults });
-        alert(`Found ${profResults.length} professionals and ${forumResults.length} forum posts matching "${query}"`);
+        alert(`Found ${profResults.length} mentors and ${forumResults.length} forum posts matching "${query}"`);
     }
 
     updateStats() {
