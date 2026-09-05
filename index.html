@@ -20,8 +20,10 @@
                 <li><a href="#" class="nav-link" data-page="professionals">👨‍💼 Find Mentors</a></li>
                 <li><a href="#" class="nav-link" data-page="forum">💬 Community</a></li>
                 <li><a href="#" class="nav-link" data-page="notifications">🔔 Messages</a></li>
+                <li id="admin-nav-link" style="display: none;"><a href="#" class="nav-link" data-page="admin">⚙️ Admin Panel</a></li>
             </ul>
             <div class="sidebar-footer">
+                <button class="profile-btn" onclick="app.openProfileModal()">👤 Profile</button>
                 <button class="logout-btn">Logout</button>
             </div>
         </nav>
@@ -121,8 +123,8 @@
                                     </label>
                                 </div>
 
-                                <div id="professional-section" class="form-group professional-section">
-                                    <label for="select-professional">Choose a Mentor *</label>
+                                <div id="professional-section" class="form-group professional-section active">
+                                    <label>Choose a Mentor *</label>
                                     <div class="professional-search">
                                         <input type="text" id="professional-search-input" placeholder="Search for mentors...">
                                         <div class="professional-dropdown" id="professional-dropdown" style="display: none;">
@@ -213,6 +215,33 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Admin Panel Page -->
+                <div class="page" id="admin-page" style="display: none;">
+                    <div class="page-content">
+                        <h2>Admin Panel</h2>
+                        <div class="admin-tabs">
+                            <button class="admin-tab-btn active" onclick="app.switchAdminTab('users')">👥 Users</button>
+                            <button class="admin-tab-btn" onclick="app.switchAdminTab('roles')">🏷️ Roles</button>
+                        </div>
+
+                        <!-- Users Tab -->
+                        <div class="admin-tab-content" id="admin-users-tab">
+                            <h3>User Management</h3>
+                            <div class="users-list" id="users-list">
+                                <!-- Users will be populated here -->
+                            </div>
+                        </div>
+
+                        <!-- Roles Tab -->
+                        <div class="admin-tab-content" id="admin-roles-tab" style="display: none;">
+                            <h3>Role Management</h3>
+                            <div class="roles-list" id="roles-list">
+                                <!-- Roles will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -233,6 +262,29 @@
             <span class="close-modal">&times;</span>
             <div id="professional-modal-body">
                 <!-- Mentor details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for profile -->
+    <div class="modal" id="profile-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="profile-modal-body">
+                <!-- Profile details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for login -->
+    <div class="modal" id="login-modal" style="display: none;">
+        <div class="modal-content" style="max-width: 400px;">
+            <h2>Login Required</h2>
+            <p>This account requires a password.</p>
+            <input type="password" id="login-password" placeholder="Enter password" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px;">
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-primary" onclick="app.submitLogin()">Login</button>
+                <button class="btn btn-secondary" onclick="app.cancelLogin()">Cancel</button>
             </div>
         </div>
     </div>
