@@ -1,10 +1,10 @@
-// Sample Data
+// Sample Data for MentorMate
 const SAMPLE_DATA = {
     currentUser: {
         id: 'user_florik',
         username: 'Florik',
-        email: 'florik@anonyq.local',
-        role: 'master', // Master role can manage professionals
+        email: 'florik@mentormate.local',
+        role: 'master', // Master role can manage mentors
         avatar: '👤',
         joinedDate: '2024-01-15'
     },
@@ -13,13 +13,13 @@ const SAMPLE_DATA = {
         {
             id: 'prof_dieter',
             name: 'Dieter',
-            title: 'Knowledge Expert',
-            bio: 'Passionate about sharing knowledge across various topics and helping others learn.',
+            title: 'General Knowledge Expert',
+            bio: 'Passionate about helping students learn and grow. Always happy to share knowledge and support your journey.',
             avatar: '👨‍🏫',
-            category: 'General Knowledge',
+            category: 'Personal Growth',
             expertise: ['Allgemeinwissen'],
             tags: ['Allgemeinwissen'],
-            specialties: ['General Knowledge', 'Learning Support', 'Topic Research'],
+            specialties: ['General Knowledge', 'Study Support', 'Personal Development'],
             rating: 4.8,
             answers: 245,
             responseTime: '2 hours',
@@ -29,13 +29,13 @@ const SAMPLE_DATA = {
         {
             id: 'prof_german',
             name: 'German',
-            title: 'Q&A Specialist',
-            bio: 'Expert in answering complex questions with detailed, insightful responses.',
+            title: 'Career Mentor & Problem Solver',
+            bio: 'Experienced in guiding students through career decisions and complex challenges. Expert at breaking down problems.',
             avatar: '🧠',
-            category: 'Questions & Answers',
+            category: 'Career & Jobs',
             expertise: ['Q&A Expert'],
             tags: ['Q&A Expert'],
-            specialties: ['Complex Questions', 'Problem Solving', 'Expert Advice'],
+            specialties: ['Career Advice', 'Problem Solving', 'Job Search'],
             rating: 4.9,
             answers: 512,
             responseTime: '1 hour',
@@ -45,13 +45,13 @@ const SAMPLE_DATA = {
         {
             id: 'prof_tech',
             name: 'Tech Sarah',
-            title: 'Technology Consultant',
-            bio: 'Full-stack developer and technology enthusiast helping with tech questions.',
+            title: 'Technical Skills Trainer',
+            bio: 'Full-stack developer passionate about teaching tech skills to the next generation.',
             avatar: '💻',
-            category: 'Technology',
-            expertise: ['Web Development', 'Cloud Services', 'DevOps'],
+            category: 'Technical Skills',
+            expertise: ['Programming', 'Web Development', 'Tech Support'],
             tags: [],
-            specialties: ['Web Development', 'Cloud Architecture', 'System Design'],
+            specialties: ['Web Development', 'Programming', 'Tech Troubleshooting'],
             rating: 4.7,
             answers: 189,
             responseTime: '3 hours',
@@ -61,13 +61,13 @@ const SAMPLE_DATA = {
         {
             id: 'prof_business',
             name: 'Business Bob',
-            title: 'Business Strategist',
-            bio: 'Experienced entrepreneur and business consultant offering strategic insights.',
+            title: 'Business Mentor & Entrepreneur',
+            bio: 'Experienced business owner helping students understand the business world and entrepreneurship.',
             avatar: '💼',
-            category: 'Business',
+            category: 'Business Basics',
             expertise: ['Business Strategy', 'Startups', 'Management'],
             tags: [],
-            specialties: ['Business Strategy', 'Startup Advice', 'Leadership'],
+            specialties: ['Business Basics', 'Entrepreneurship', 'Leadership'],
             rating: 4.6,
             answers: 234,
             responseTime: '4 hours',
@@ -77,13 +77,13 @@ const SAMPLE_DATA = {
         {
             id: 'prof_health',
             name: 'Dr. Emily',
-            title: 'Health & Wellness Expert',
-            bio: 'Healthcare professional providing evidence-based health and wellness information.',
+            title: 'Health & Wellness Coach',
+            bio: 'Healthcare professional supporting student wellbeing and healthy lifestyle choices.',
             avatar: '👨‍⚕️',
-            category: 'Health',
-            expertise: ['Health & Wellness', 'Fitness', 'Nutrition'],
+            category: 'Health & Wellness',
+            expertise: ['Health & Wellness', 'Fitness', 'Mental Health'],
             tags: [],
-            specialties: ['Health Advice', 'Fitness Guidance', 'Wellness'],
+            specialties: ['Health Advice', 'Fitness', 'Wellness & Stress Management'],
             rating: 4.9,
             answers: 378,
             responseTime: '2 hours',
@@ -95,9 +95,9 @@ const SAMPLE_DATA = {
     questions: [
         {
             id: 'q_001',
-            title: 'How can I improve my productivity?',
-            category: 'career',
-            description: 'I struggle with staying focused on tasks. What are some proven techniques to improve productivity?',
+            title: 'How can I improve my productivity while studying?',
+            category: 'personal',
+            description: 'I struggle with staying focused on my studies. What are some proven techniques to improve concentration?',
             sendToProf: {
                 active: true,
                 professionalId: 'prof_german'
@@ -106,15 +106,15 @@ const SAMPLE_DATA = {
             status: 'answered',
             userId: 'user_florik',
             createdDate: '2024-08-20',
-            answer: 'Here are some proven techniques: 1. Pomodoro Technique, 2. Time blocking, 3. Eliminating distractions, 4. Setting clear goals...',
+            answer: 'Here are some proven techniques: 1. Pomodoro Technique (25 min focus + 5 min break), 2. Time blocking your day, 3. Removing distractions, 4. Setting clear goals...',
             answeredBy: 'prof_german',
             answeredDate: '2024-08-21'
         },
         {
             id: 'q_002',
-            title: 'What is the best way to learn a new programming language?',
-            category: 'technology',
-            description: 'I want to learn Python. What resources and methods would you recommend?',
+            title: 'What programming languages should I learn for my career?',
+            category: 'technical',
+            description: 'I want to learn programming but don\'t know which language to start with. What would you recommend?',
             sendToProf: {
                 active: true,
                 professionalId: 'prof_tech'
@@ -126,9 +126,9 @@ const SAMPLE_DATA = {
         },
         {
             id: 'q_003',
-            title: 'How to start a successful business?',
+            title: 'How to start my own business after vocational school?',
             category: 'business',
-            description: 'I have a business idea but don\'t know where to start. What are the first steps?',
+            description: 'I have a business idea but don\'t know where to start. What are the first steps I should take?',
             sendToProf: {
                 active: true,
                 professionalId: 'prof_business'
@@ -137,7 +137,7 @@ const SAMPLE_DATA = {
             status: 'answered',
             userId: 'user_florik',
             createdDate: '2024-08-15',
-            answer: 'Starting a business requires: 1. Market research, 2. Business plan, 3. Funding, 4. Legal setup...',
+            answer: 'Starting a business requires: 1. Market research, 2. Business plan, 3. Funding strategy, 4. Legal setup...',
             answeredBy: 'prof_business',
             answeredDate: '2024-08-16'
         }
@@ -146,30 +146,30 @@ const SAMPLE_DATA = {
     forumPosts: [
         {
             id: 'forum_001',
-            title: 'Best practices for remote work',
-            category: 'career',
-            description: 'What are the best practices for working from home effectively?',
-            author: 'Anonymous User',
+            title: 'Best ways to balance work and studies',
+            category: 'personal',
+            description: 'How do you manage to keep up with both work and vocational training? Any tips?',
+            author: 'Anonymous Student',
             createdDate: '2024-08-22',
             replies: 12,
             views: 156
         },
         {
             id: 'forum_002',
-            title: 'Understanding JavaScript async/await',
-            category: 'technology',
-            description: 'Can anyone explain how async/await works in JavaScript?',
-            author: 'Anonymous User',
+            title: 'Tips for job interviews after graduation',
+            category: 'career',
+            description: 'I\'m almost done with my vocational training. Any advice on acing job interviews?',
+            author: 'Anonymous Student',
             createdDate: '2024-08-21',
             replies: 8,
             views: 98
         },
         {
             id: 'forum_003',
-            title: 'Nutrition tips for fitness enthusiasts',
+            title: 'Dealing with stress and anxiety during training',
             category: 'health',
-            description: 'What nutrition strategies do you follow for fitness?',
-            author: 'Anonymous User',
+            description: 'Does anyone else feel overwhelmed during their training? How do you cope with stress?',
+            author: 'Anonymous Student',
             createdDate: '2024-08-20',
             replies: 15,
             views: 234
@@ -180,8 +180,8 @@ const SAMPLE_DATA = {
         {
             id: 'notif_001',
             type: 'answer',
-            title: 'Your question has been answered!',
-            message: 'German answered: "How can I improve my productivity?"',
+            title: 'German answered your question!',
+            message: '"How can I improve my productivity while studying?" - Get some great tips!',
             questionId: 'q_001',
             timestamp: '2024-08-21 10:30',
             read: false
@@ -189,8 +189,8 @@ const SAMPLE_DATA = {
         {
             id: 'notif_002',
             type: 'forum_reply',
-            title: 'Someone replied to your forum post',
-            message: 'New reply in: "Best practices for remote work"',
+            title: 'Someone replied in the community',
+            message: 'New response in: "Best ways to balance work and studies"',
             postId: 'forum_001',
             timestamp: '2024-08-22 14:15',
             read: false
@@ -198,8 +198,8 @@ const SAMPLE_DATA = {
         {
             id: 'notif_003',
             type: 'professional_update',
-            title: 'Professional tag update',
-            message: 'Dieter\'s tags have been updated',
+            title: 'New mentor joined!',
+            message: 'Dieter is now available to help with general knowledge questions',
             professionalId: 'prof_dieter',
             timestamp: '2024-08-22 09:00',
             read: true
@@ -214,9 +214,9 @@ class StorageManager {
     }
 
     loadData() {
-        const stored = localStorage.getItem('anonyQ_data');
+        const stored = localStorage.getItem('mentormate_data');
         if (!stored) {
-            localStorage.setItem('anonyQ_data', JSON.stringify(SAMPLE_DATA));
+            localStorage.setItem('mentormate_data', JSON.stringify(SAMPLE_DATA));
             this.data = JSON.parse(JSON.stringify(SAMPLE_DATA));
         } else {
             this.data = JSON.parse(stored);
@@ -224,7 +224,7 @@ class StorageManager {
     }
 
     saveData() {
-        localStorage.setItem('anonyQ_data', JSON.stringify(this.data));
+        localStorage.setItem('mentormate_data', JSON.stringify(this.data));
     }
 
     getCurrentUser() {
@@ -368,8 +368,8 @@ class StorageManager {
             const prof = this.getProfessionalById(professionalId);
             this.addNotification({
                 type: 'answer',
-                title: 'Your question has been answered!',
-                message: `${prof.name} answered: "${question.title}"`,
+                title: `${prof.name} answered your question!`,
+                message: `"${question.title}" - Check out the response!`,
                 questionId: questionId
             });
 
