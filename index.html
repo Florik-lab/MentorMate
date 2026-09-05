@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnonyQ - Anonymous Questions to Professionals</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation Sidebar -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h1>AnonyQ</h1>
+                <p>Ask Anonymously</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-page="dashboard">📊 Dashboard</a></li>
+                <li><a href="#" class="nav-link" data-page="ask-question">❓ Ask Question</a></li>
+                <li><a href="#" class="nav-link" data-page="professionals">👨‍💼 Find Professionals</a></li>
+                <li><a href="#" class="nav-link" data-page="forum">💬 Forum</a></li>
+                <li><a href="#" class="nav-link" data-page="notifications">🔔 Notifications</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button class="logout-btn">Logout</button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h2 id="page-title">Dashboard</h2>
+                <div class="header-actions">
+                    <input type="text" class="search-global" placeholder="Search questions...">
+                    <div class="notifications-bell">
+                        <span class="bell-icon">🔔</span>
+                        <span class="notification-count" id="notification-count">0</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Pages Container -->
+            <div class="pages-container">
+                <!-- Dashboard Page -->
+                <div class="page" id="dashboard-page">
+                    <div class="page-content">
+                        <div class="dashboard-grid">
+                            <div class="stats-container">
+                                <div class="stat-card">
+                                    <h3>Total Questions</h3>
+                                    <p class="stat-number" id="total-questions">0</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>Answered</h3>
+                                    <p class="stat-number" id="answered-questions">0</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>Pending</h3>
+                                    <p class="stat-number" id="pending-questions">0</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>New Notifications</h3>
+                                    <p class="stat-number" id="new-notifications">0</p>
+                                </div>
+                            </div>
+
+                            <div class="dashboard-section">
+                                <h3>Your Recent Questions</h3>
+                                <div class="questions-list" id="my-questions-list">
+                                    <p class="empty-state">No questions yet. <a href="#" class="link-btn" data-page="ask-question">Ask one now!</a></p>
+                                </div>
+                            </div>
+
+                            <div class="dashboard-section">
+                                <h3>Recent Answers</h3>
+                                <div class="answers-list" id="recent-answers-list">
+                                    <p class="empty-state">No answers yet.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ask Question Page -->
+                <div class="page" id="ask-question-page" style="display: none;">
+                    <div class="page-content">
+                        <div class="form-container">
+                            <h2>Ask a Question</h2>
+                            <form id="ask-question-form">
+                                <div class="form-group">
+                                    <label for="question-title">Question Title *</label>
+                                    <input type="text" id="question-title" placeholder="What do you want to ask?" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="question-category">Category *</label>
+                                    <select id="question-category" required>
+                                        <option value="">Select a category</option>
+                                        <option value="technology">Technology</option>
+                                        <option value="business">Business</option>
+                                        <option value="career">Career</option>
+                                        <option value="health">Health</option>
+                                        <option value="education">Education</option>
+                                        <option value="finance">Finance</option>
+                                        <option value="legal">Legal</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="question-details">Question Details *</label>
+                                    <textarea id="question-details" placeholder="Provide more details about your question..." rows="6" required></textarea>
+                                </div>
+
+                                <div class="form-group checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="ask-professional" checked>
+                                        <span>Send to a Professional</span>
+                                    </label>
+                                </div>
+
+                                <div id="professional-section" class="form-group professional-section">
+                                    <label for="select-professional">Select a Professional *</label>
+                                    <div class="professional-search">
+                                        <input type="text" id="professional-search-input" placeholder="Search for professionals...">
+                                        <div class="professional-dropdown" id="professional-dropdown" style="display: none;">
+                                            <div class="dropdown-content" id="professional-list">
+                                                <!-- Professionals will be populated here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="selected-professional" class="selected-professional"></div>
+                                </div>
+
+                                <div class="form-group checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="post-on-forum">
+                                        <span>Also Post on Forum (Everyone can answer)</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Submit Question</button>
+                                    <button type="reset" class="btn btn-secondary">Clear</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Find Professionals Page -->
+                <div class="page" id="professionals-page" style="display: none;">
+                    <div class="page-content">
+                        <h2>Find Professionals</h2>
+                        <div class="professionals-filter">
+                            <input type="text" id="professionals-search" placeholder="Search by name, expertise, or specialty...">
+                            <select id="professionals-category-filter">
+                                <option value="">All Categories</option>
+                                <option value="technology">Technology</option>
+                                <option value="business">Business</option>
+                                <option value="career">Career</option>
+                                <option value="health">Health</option>
+                                <option value="education">Education</option>
+                                <option value="finance">Finance</option>
+                                <option value="legal">Legal</option>
+                            </select>
+                        </div>
+
+                        <div class="professionals-grid" id="professionals-grid">
+                            <!-- Professionals will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Forum Page -->
+                <div class="page" id="forum-page" style="display: none;">
+                    <div class="page-content">
+                        <div class="forum-header">
+                            <h2>Community Forum</h2>
+                            <button class="btn btn-primary" data-page="ask-question">Post a Question</button>
+                        </div>
+
+                        <div class="forum-filter">
+                            <input type="text" id="forum-search" placeholder="Search forum questions...">
+                            <select id="forum-category-filter">
+                                <option value="">All Categories</option>
+                                <option value="technology">Technology</option>
+                                <option value="business">Business</option>
+                                <option value="career">Career</option>
+                                <option value="health">Health</option>
+                                <option value="education">Education</option>
+                                <option value="finance">Finance</option>
+                                <option value="legal">Legal</option>
+                            </select>
+                        </div>
+
+                        <div class="forum-threads" id="forum-threads">
+                            <!-- Forum threads will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications Page -->
+                <div class="page" id="notifications-page" style="display: none;">
+                    <div class="page-content">
+                        <h2>Notifications</h2>
+                        <div class="notifications-container" id="notifications-list">
+                            <p class="empty-state">No notifications yet.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for viewing question details -->
+    <div class="modal" id="question-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-body">
+                <!-- Question details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for viewing professional profile -->
+    <div class="modal" id="professional-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="professional-modal-body">
+                <!-- Professional details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
