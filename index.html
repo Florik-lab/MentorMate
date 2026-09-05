@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnonyQ - Anonymous Questions to Professionals</title>
+    <title>MentorMate - Connect with Mentors & Peers</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,15 +11,15 @@
         <!-- Navigation Sidebar -->
         <nav class="sidebar">
             <div class="logo">
-                <h1>AnonyQ</h1>
-                <p>Ask Anonymously</p>
+                <h1>MentorMate</h1>
+                <p>Find Support, Grow Together</p>
             </div>
             <ul class="nav-menu">
                 <li><a href="#" class="nav-link active" data-page="dashboard">📊 Dashboard</a></li>
-                <li><a href="#" class="nav-link" data-page="ask-question">❓ Ask Question</a></li>
-                <li><a href="#" class="nav-link" data-page="professionals">👨‍💼 Find Professionals</a></li>
-                <li><a href="#" class="nav-link" data-page="forum">💬 Forum</a></li>
-                <li><a href="#" class="nav-link" data-page="notifications">🔔 Notifications</a></li>
+                <li><a href="#" class="nav-link" data-page="ask-question">❓ Ask for Help</a></li>
+                <li><a href="#" class="nav-link" data-page="professionals">👨‍💼 Find Mentors</a></li>
+                <li><a href="#" class="nav-link" data-page="forum">💬 Community</a></li>
+                <li><a href="#" class="nav-link" data-page="notifications">🔔 Messages</a></li>
             </ul>
             <div class="sidebar-footer">
                 <button class="logout-btn">Logout</button>
@@ -32,7 +32,7 @@
             <header class="header">
                 <h2 id="page-title">Dashboard</h2>
                 <div class="header-actions">
-                    <input type="text" class="search-global" placeholder="Search questions...">
+                    <input type="text" class="search-global" placeholder="Search for mentors, topics...">
                     <div class="notifications-bell">
                         <span class="bell-icon">🔔</span>
                         <span class="notification-count" id="notification-count">0</span>
@@ -48,7 +48,7 @@
                         <div class="dashboard-grid">
                             <div class="stats-container">
                                 <div class="stat-card">
-                                    <h3>Total Questions</h3>
+                                    <h3>Questions Asked</h3>
                                     <p class="stat-number" id="total-questions">0</p>
                                 </div>
                                 <div class="stat-card">
@@ -56,11 +56,11 @@
                                     <p class="stat-number" id="answered-questions">0</p>
                                 </div>
                                 <div class="stat-card">
-                                    <h3>Pending</h3>
+                                    <h3>Waiting</h3>
                                     <p class="stat-number" id="pending-questions">0</p>
                                 </div>
                                 <div class="stat-card">
-                                    <h3>New Notifications</h3>
+                                    <h3>New Messages</h3>
                                     <p class="stat-number" id="new-notifications">0</p>
                                 </div>
                             </div>
@@ -68,12 +68,12 @@
                             <div class="dashboard-section">
                                 <h3>Your Recent Questions</h3>
                                 <div class="questions-list" id="my-questions-list">
-                                    <p class="empty-state">No questions yet. <a href="#" class="link-btn" data-page="ask-question">Ask one now!</a></p>
+                                    <p class="empty-state">No questions yet. <a href="#" class="link-btn" data-page="ask-question">Ask for help now!</a></p>
                                 </div>
                             </div>
 
                             <div class="dashboard-section">
-                                <h3>Recent Answers</h3>
+                                <h3>Answers You've Received</h3>
                                 <div class="answers-list" id="recent-answers-list">
                                     <p class="empty-state">No answers yet.</p>
                                 </div>
@@ -86,47 +86,48 @@
                 <div class="page" id="ask-question-page" style="display: none;">
                     <div class="page-content">
                         <div class="form-container">
-                            <h2>Ask a Question</h2>
+                            <h2>Ask for Help</h2>
                             <form id="ask-question-form">
                                 <div class="form-group">
-                                    <label for="question-title">Question Title *</label>
-                                    <input type="text" id="question-title" placeholder="What do you want to ask?" required>
+                                    <label for="question-title">Your Question *</label>
+                                    <input type="text" id="question-title" placeholder="What do you need help with?" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="question-category">Category *</label>
+                                    <label for="question-category">Topic *</label>
                                     <select id="question-category" required>
-                                        <option value="">Select a category</option>
-                                        <option value="technology">Technology</option>
-                                        <option value="business">Business</option>
-                                        <option value="career">Career</option>
-                                        <option value="health">Health</option>
+                                        <option value="">Select a topic</option>
+                                        <option value="career">Career & Jobs</option>
+                                        <option value="training">Training & Skills</option>
+                                        <option value="personal">Personal Growth</option>
+                                        <option value="technical">Technical Skills</option>
+                                        <option value="business">Business Basics</option>
                                         <option value="education">Education</option>
-                                        <option value="finance">Finance</option>
-                                        <option value="legal">Legal</option>
+                                        <option value="health">Health & Wellness</option>
+                                        <option value="relationships">Relationships & Friends</option>
                                         <option value="other">Other</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="question-details">Question Details *</label>
-                                    <textarea id="question-details" placeholder="Provide more details about your question..." rows="6" required></textarea>
+                                    <label for="question-details">Tell Us More *</label>
+                                    <textarea id="question-details" placeholder="Provide more details about what you need help with..." rows="6" required></textarea>
                                 </div>
 
                                 <div class="form-group checkbox-group">
                                     <label class="checkbox-label">
                                         <input type="checkbox" id="ask-professional" checked>
-                                        <span>Send to a Professional</span>
+                                        <span>Send to a Mentor (Direct Help)</span>
                                     </label>
                                 </div>
 
                                 <div id="professional-section" class="form-group professional-section">
-                                    <label for="select-professional">Select a Professional *</label>
+                                    <label for="select-professional">Choose a Mentor *</label>
                                     <div class="professional-search">
-                                        <input type="text" id="professional-search-input" placeholder="Search for professionals...">
+                                        <input type="text" id="professional-search-input" placeholder="Search for mentors...">
                                         <div class="professional-dropdown" id="professional-dropdown" style="display: none;">
                                             <div class="dropdown-content" id="professional-list">
-                                                <!-- Professionals will be populated here -->
+                                                <!-- Mentors will be populated here -->
                                             </div>
                                         </div>
                                     </div>
@@ -136,12 +137,12 @@
                                 <div class="form-group checkbox-group">
                                     <label class="checkbox-label">
                                         <input type="checkbox" id="post-on-forum">
-                                        <span>Also Post on Forum (Everyone can answer)</span>
+                                        <span>Also Post in Community (Get Help from Anyone)</span>
                                     </label>
                                 </div>
 
                                 <div class="form-actions">
-                                    <button type="submit" class="btn btn-primary">Submit Question</button>
+                                    <button type="submit" class="btn btn-primary">Send Request</button>
                                     <button type="reset" class="btn btn-secondary">Clear</button>
                                 </div>
                             </form>
@@ -149,49 +150,51 @@
                     </div>
                 </div>
 
-                <!-- Find Professionals Page -->
+                <!-- Find Mentors Page -->
                 <div class="page" id="professionals-page" style="display: none;">
                     <div class="page-content">
-                        <h2>Find Professionals</h2>
+                        <h2>Find Mentors</h2>
                         <div class="professionals-filter">
-                            <input type="text" id="professionals-search" placeholder="Search by name, expertise, or specialty...">
+                            <input type="text" id="professionals-search" placeholder="Search by name or expertise...">
                             <select id="professionals-category-filter">
-                                <option value="">All Categories</option>
-                                <option value="technology">Technology</option>
-                                <option value="business">Business</option>
-                                <option value="career">Career</option>
-                                <option value="health">Health</option>
+                                <option value="">All Topics</option>
+                                <option value="career">Career & Jobs</option>
+                                <option value="training">Training & Skills</option>
+                                <option value="personal">Personal Growth</option>
+                                <option value="technical">Technical Skills</option>
+                                <option value="business">Business Basics</option>
                                 <option value="education">Education</option>
-                                <option value="finance">Finance</option>
-                                <option value="legal">Legal</option>
+                                <option value="health">Health & Wellness</option>
+                                <option value="relationships">Relationships & Friends</option>
                             </select>
                         </div>
 
                         <div class="professionals-grid" id="professionals-grid">
-                            <!-- Professionals will be populated here -->
+                            <!-- Mentors will be populated here -->
                         </div>
                     </div>
                 </div>
 
-                <!-- Forum Page -->
+                <!-- Community Page -->
                 <div class="page" id="forum-page" style="display: none;">
                     <div class="page-content">
                         <div class="forum-header">
                             <h2>Community Forum</h2>
-                            <button class="btn btn-primary" data-page="ask-question">Post a Question</button>
+                            <button class="btn btn-primary" data-page="ask-question">Ask in Community</button>
                         </div>
 
                         <div class="forum-filter">
-                            <input type="text" id="forum-search" placeholder="Search forum questions...">
+                            <input type="text" id="forum-search" placeholder="Search community questions...">
                             <select id="forum-category-filter">
-                                <option value="">All Categories</option>
-                                <option value="technology">Technology</option>
-                                <option value="business">Business</option>
-                                <option value="career">Career</option>
-                                <option value="health">Health</option>
+                                <option value="">All Topics</option>
+                                <option value="career">Career & Jobs</option>
+                                <option value="training">Training & Skills</option>
+                                <option value="personal">Personal Growth</option>
+                                <option value="technical">Technical Skills</option>
+                                <option value="business">Business Basics</option>
                                 <option value="education">Education</option>
-                                <option value="finance">Finance</option>
-                                <option value="legal">Legal</option>
+                                <option value="health">Health & Wellness</option>
+                                <option value="relationships">Relationships & Friends</option>
                             </select>
                         </div>
 
@@ -201,12 +204,12 @@
                     </div>
                 </div>
 
-                <!-- Notifications Page -->
+                <!-- Messages Page -->
                 <div class="page" id="notifications-page" style="display: none;">
                     <div class="page-content">
-                        <h2>Notifications</h2>
+                        <h2>Messages</h2>
                         <div class="notifications-container" id="notifications-list">
-                            <p class="empty-state">No notifications yet.</p>
+                            <p class="empty-state">No messages yet.</p>
                         </div>
                     </div>
                 </div>
@@ -224,12 +227,12 @@
         </div>
     </div>
 
-    <!-- Modal for viewing professional profile -->
+    <!-- Modal for viewing mentor profile -->
     <div class="modal" id="professional-modal" style="display: none;">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <div id="professional-modal-body">
-                <!-- Professional details will be populated here -->
+                <!-- Mentor details will be populated here -->
             </div>
         </div>
     </div>
